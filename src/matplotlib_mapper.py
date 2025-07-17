@@ -263,7 +263,7 @@ class MatplotlibMapper:
         
         print(f"   Total ship tracks plotted: {track_count}")
 
-            elif feature['geometry']['type'] == 'Point':
+        elif feature['geometry']['type'] == 'Point':
                 coords = feature['geometry']['coordinates']
                 props = feature['properties']
                 vessel_name = props['vessel_name']
