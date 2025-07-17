@@ -37,42 +37,38 @@ def main():
     
     # Process ship data
     print("\n📊 Processing ship track data...")
-    real_ship_csv_path = "data/shiptrack1.csv"
-    sample_ship_csv_path = "sample_data/sample_ship_data.csv"
     
-    if os.path.exists(real_ship_csv_path):
-        # Load real ship data from CSV
-        print("🚢 Using real ship track data...")
-        ship_data = processor.load_real_ship_data_from_csv(real_ship_csv_path)
+    # Try to load multiple ship files from data directory
+    ship_data = processor.load_multiple_ship_files_from_directory("data")
+    
+    if ship_data is not None:
+        # Create ship tracks GeoJSON
+        ship_geojson = processor.create_ship_tracks_geojson(ship_data)
         
-        if ship_data is not None:
-            # Create ship tracks GeoJSON
-            ship_geojson = processor.create_ship_tracks_geojson(ship_data)
-            
-            # Save ship GeoJSON
-            processor.save_geojson(ship_geojson, "output/real_ship_tracks.geojson")
-            print("✅ Real ship data processed successfully")
-        else:
-            print("❌ Failed to process real ship data")
-            ship_geojson = None
-    elif os.path.exists(sample_ship_csv_path):
-        # Fallback to sample data
-        print("⚠️  Real ship data not found, using sample data...")
-        ship_data = processor.load_ship_data_from_csv(sample_ship_csv_path)
-        
-        if ship_data is not None:
-            # Create ship tracks GeoJSON
-            ship_geojson = processor.create_ship_tracks_geojson(ship_data)
-            
-            # Save ship GeoJSON
-            processor.save_geojson(ship_geojson, "output/ship_tracks.geojson")
-            print("✅ Sample ship data processed successfully")
-        else:
-            print("❌ Failed to process sample ship data")
-            ship_geojson = None
+        # Save ship GeoJSON
+        processor.save_geojson(ship_geojson, "output/combined_ship_tracks.geojson")
+        print("✅ Multiple ship data files processed successfully")
     else:
-        print("❌ No ship data files found")
-        ship_geojson = None
+        # Fallback to sample data
+        print("⚠️  No ship data files found in data directory, trying sample data...")
+        sample_ship_csv_path = "sample_data/sample_ship_data.csv"
+        
+        if os.path.exists(sample_ship_csv_path):
+            ship_data = processor.load_ship_data_from_csv(sample_ship_csv_path)
+            
+            if ship_data is not None:
+                # Create ship tracks GeoJSON
+                ship_geojson = processor.create_ship_tracks_geojson(ship_data)
+                
+                # Save ship GeoJSON
+                processor.save_geojson(ship_geojson, "output/ship_tracks.geojson")
+                print("✅ Sample ship data processed successfully")
+            else:
+                print("❌ Failed to process sample ship data")
+                ship_geojson = None
+        else:
+            print("❌ No ship data files found")
+            ship_geojson = None
     
     # Process storm data using configuration
     print("\n🌪️ Processing storm track data...")
@@ -117,7 +113,12 @@ def main():
     
     # Print summary
     print("\n📋 Project Summary:")
-    print("   - Ship tracks: 2 vessels with position data")
+    if ship_data is not None:
+        num_vessels = len(ship_data.groupby(['vessel_name', 'MMSI']).groups) if 'vessel_name' in ship_data.columns or 'MMSI' in ship_data.columns else 0
+        num_files = len(ship_data['source_file'].unique()) if 'source_file' in ship_data.columns else 1
+        print(f"   - Ship tracks: {num_vessels} vessels from {num_files} data files")
+    else:
+        print("   - Ship tracks: No ship data loaded")
     print(f"   - Storm track: {config.STORM_NAME} ({config.STORM_YEAR}) from {config.STORM_BASIN} basin")
     print("   - Interactive map: HTML file for web viewing")
     print("   - Static map: PNG file for presentations")
@@ -136,7 +137,8 @@ def main():
     print(f"   📄 Interactive Map: {interactive_output}")
     print(f"   🖼️  Static Map: {static_output}")
     storm_geojson_file = f"output/{config.STORM_NAME.lower()}_{config.STORM_YEAR}_track.geojson"
-    print(f"   📊 Data Files: output/ship_tracks.geojson, {storm_geojson_file}")
+    ship_geojson_file = "output/combined_ship_tracks.geojson" if ship_data is not None and 'source_file' in ship_data.columns else "output/ship_tracks.geojson"
+    print(f"   📊 Data Files: {ship_geojson_file}, {storm_geojson_file}")
     
     print("\n💡 Usage:")
     print("   • Interactive Map: Open HTML file in web browser")

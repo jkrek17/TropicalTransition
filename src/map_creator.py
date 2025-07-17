@@ -229,10 +229,13 @@ class MapCreator:
                     </div>
                     """
                     
+                    # Get track color
+                    track_color = feature['properties'].get('track_color', 'blue')
+                    
                     # Add track line (single continuous line)
                     folium.PolyLine(
                         locations=folium_coords,
-                        color='blue',
+                        color=track_color,
                         weight=3,
                         opacity=0.8,
                         popup=folium.Popup(popup_content, max_width=300),
@@ -270,10 +273,13 @@ class MapCreator:
                     </div>
                     """
                     
+                    # Get track color
+                    track_color = feature['properties'].get('track_color', 'blue')
+                    
                     # Add track line
                     folium.PolyLine(
                         locations=folium_coords,
-                        color='blue',
+                        color=track_color,
                         weight=3,
                         opacity=0.8,
                         popup=folium.Popup(popup_content, max_width=300),

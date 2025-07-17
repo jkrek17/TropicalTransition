@@ -222,6 +222,123 @@ class DataProcessor:
         except Exception as e:
             print(f"Error loading real ship data: {e}")
             return None
+
+    def load_multiple_ship_files_from_directory(self, data_dir="data"):
+        """
+        Load multiple ship track files from a directory.
+        
+        Args:
+            data_dir (str): Directory containing ship track CSV files
+            
+        Returns:
+            pandas.DataFrame: Combined ship data from all files
+        """
+        import glob
+        import random
+        
+        all_ship_data = []
+        
+        # Find all CSV files in the data directory
+        csv_files = glob.glob(os.path.join(data_dir, "*.csv"))
+        
+        if not csv_files:
+            print(f"No CSV files found in {data_dir} directory")
+            return None
+        
+        print(f"Found {len(csv_files)} CSV files to process:")
+        
+        # Generate random colors for each file
+        colors = self._generate_random_colors(len(csv_files))
+        
+        for i, csv_file in enumerate(csv_files):
+            print(f"  Processing: {csv_file}")
+            
+            try:
+                # Try to load as real ship data first
+                df = pd.read_csv(csv_file)
+                
+                # Check if it's real ship data format (has MMSI, TimeOfFix, etc.)
+                if 'MMSI' in df.columns and 'TimeOfFix' in df.columns:
+                    # Real ship data format
+                    df['timestamp'] = pd.to_datetime(df['TimeOfFix'])
+                    df = df.rename(columns={
+                        'SOG': 'speed_knots',
+                        'Heading': 'heading_degrees'
+                    })
+                    df['vessel_name'] = f"Vessel {df['MMSI'].iloc[0]}"
+                    df['vessel_type'] = 'Cargo'
+                    geometry = [Point(lon, lat) for lon, lat in zip(df['Longitude'], df['Latitude'])]
+                    
+                elif 'vessel_name' in df.columns and 'timestamp' in df.columns:
+                    # Sample ship data format
+                    df['timestamp'] = pd.to_datetime(df['timestamp'])
+                    geometry = [Point(lon, lat) for lon, lat in zip(df['longitude'], df['latitude'])]
+                    
+                else:
+                    print(f"    Skipping {csv_file}: Unknown format")
+                    continue
+                
+                # Create GeoDataFrame
+                gdf = gpd.GeoDataFrame(df, geometry=geometry, crs='EPSG:4326')
+                
+                # Add unique color for this file
+                gdf['track_color'] = colors[i]
+                
+                # Add file source
+                gdf['source_file'] = os.path.basename(csv_file)
+                
+                all_ship_data.append(gdf)
+                print(f"    Loaded {len(gdf)} points from {csv_file}")
+                
+            except Exception as e:
+                print(f"    Error loading {csv_file}: {e}")
+                continue
+        
+        if not all_ship_data:
+            print("No valid ship data files were loaded")
+            return None
+        
+        # Combine all ship data
+        combined_data = pd.concat(all_ship_data, ignore_index=True)
+        
+        self.ship_data = combined_data
+        print(f"\nTotal loaded: {len(combined_data)} ship track points from {len(all_ship_data)} files")
+        
+        return combined_data
+
+    def _generate_random_colors(self, num_colors):
+        """
+        Generate a list of random colors for ship tracks.
+        
+        Args:
+            num_colors (int): Number of colors to generate
+            
+        Returns:
+            list: List of color strings
+        """
+        import random
+        
+        # Base colors to ensure good visibility
+        base_colors = [
+            '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
+            '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
+            '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57',
+            '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43'
+        ]
+        
+        colors = []
+        
+        for i in range(num_colors):
+            if i < len(base_colors):
+                colors.append(base_colors[i])
+            else:
+                # Generate random colors for additional files
+                r = random.randint(50, 255)
+                g = random.randint(50, 255)
+                b = random.randint(50, 255)
+                colors.append(f'#{r:02x}{g:02x}{b:02x}')
+        
+        return colors
     
     def create_ship_tracks_geojson(self, ship_data=None):
         """
@@ -265,8 +382,10 @@ class DataProcessor:
             else:
                 vessel_name = f"Vessel {vessel_id}"
             
-            # Get vessel type
+            # Get vessel type and color
             vessel_type = vessel_data.get('vessel_type', 'Unknown').iloc[0]
+            track_color = vessel_data.get('track_color', '#1f77b4').iloc[0]  # Default blue
+            source_file = vessel_data.get('source_file', 'unknown').iloc[0]
             
             # Create feature for track line
             track_feature = {
@@ -275,7 +394,9 @@ class DataProcessor:
                 "properties": {
                     "vessel_name": vessel_name,
                     "vessel_type": vessel_type,
-                    "track_type": "ship_track"
+                    "track_type": "ship_track",
+                    "track_color": track_color,
+                    "source_file": source_file
                 }
             }
             features.append(track_feature)
@@ -298,7 +419,9 @@ class DataProcessor:
                         "speed_knots": speed,
                         "heading_degrees": heading,
                         "timestamp": row['timestamp'].isoformat(),
-                        "point_type": "ship_position"
+                        "point_type": "ship_position",
+                        "track_color": track_color,
+                        "source_file": source_file
                     }
                 }
                 features.append(point_feature)
