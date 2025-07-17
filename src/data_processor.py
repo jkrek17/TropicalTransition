@@ -255,7 +255,15 @@ class DataProcessor:
             
             try:
                 # Try to load as real ship data first
-                df = pd.read_csv(csv_file)
+                # Handle files that start with "sep=," by skipping that line
+                try:
+                    df = pd.read_csv(csv_file)
+                except:
+                    # If that fails, try skipping the first line (in case of sep= header)
+                    df = pd.read_csv(csv_file, skiprows=1)
+                
+                # Clean column names (remove any whitespace)
+                df.columns = df.columns.str.strip()
                 
                 # Check if it's real ship data format (has MMSI, TimeOfFix, etc.)
                 if 'MMSI' in df.columns and 'TimeOfFix' in df.columns:
@@ -265,6 +273,28 @@ class DataProcessor:
                         'SOG': 'speed_knots',
                         'Heading': 'heading_degrees'
                     })
+                    df['vessel_name'] = f"Vessel {df['MMSI'].iloc[0]}"
+                    df['vessel_type'] = 'Cargo'
+                    geometry = [Point(lon, lat) for lon, lat in zip(df['Longitude'], df['Latitude'])]
+                    
+                elif 'MMSI' in df.columns and 'TimeOfFix' in df.columns and 'Longitude' in df.columns and 'Latitude' in df.columns:
+                    # Real AIS data format with TimeOfFix
+                    df['timestamp'] = pd.to_datetime(df['TimeOfFix'], format='%Y %b %d %H:%M:%S UTC', errors='coerce')
+                    
+                    # If that fails, try a more flexible parsing
+                    if df['timestamp'].isna().all():
+                        df['timestamp'] = pd.to_datetime(df['TimeOfFix'], errors='coerce')
+                    
+                    # If still failing, create default timestamps
+                    if df['timestamp'].isna().all():
+                        df['timestamp'] = pd.to_datetime('2022-01-01 00:00:00')
+                    
+                    # Rename columns to match our expected format
+                    if 'SOG' in df.columns:
+                        df = df.rename(columns={'SOG': 'speed_knots'})
+                    if 'Heading' in df.columns:
+                        df = df.rename(columns={'Heading': 'heading_degrees'})
+                    
                     df['vessel_name'] = f"Vessel {df['MMSI'].iloc[0]}"
                     df['vessel_type'] = 'Cargo'
                     geometry = [Point(lon, lat) for lon, lat in zip(df['Longitude'], df['Latitude'])]
