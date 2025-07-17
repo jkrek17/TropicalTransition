@@ -164,8 +164,9 @@ class MatplotlibMapper:
                         all_lats.append(coord[1])
 
         if all_lons and all_lats:
-            # Check for dateline crossing
-            dateline_crossing = (min(all_lons) < 0 and max(all_lons) > 0) or (min(all_lons) < 180 and max(all_lons) > 180)
+            # Check for dateline crossing - only if data actually spans across ±180°
+            lon_range = max(all_lons) - min(all_lons)
+            dateline_crossing = lon_range > 180 and (min(all_lons) < 0 and max(all_lons) > 0)
 
             if dateline_crossing:
                 print(f"   Debug: Dateline crossing detected in data, calculating bounds in 0-360 system")
@@ -206,6 +207,7 @@ class MatplotlibMapper:
                 lat_max += padding
 
                 print(f"   Debug: Standard bounds: ({lon_min}, {lon_max}, {lat_min}, {lat_max})")
+                print(f"   Debug: Longitude range: {lon_max - lon_min:.2f}°, Latitude range: {lat_max - lat_min:.2f}°")
                 return (lon_min, lon_max, lat_min, lat_max)
 
         # Default bounds if no data
