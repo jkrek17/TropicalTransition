@@ -28,6 +28,7 @@ class MapCreator:
     def calculate_map_center_and_zoom(self, ship_geojson=None, storm_geojson=None):
         """
         Calculate optimal center coordinates and zoom level from data.
+        Prioritizes storm track for center calculation, then includes ship data only if no storm data exists.
 
         Args:
             ship_geojson (dict): GeoJSON data for ship tracks
@@ -39,22 +40,25 @@ class MapCreator:
         all_lons = []
         all_lats = []
 
-        # Collect coordinates from ship data
-        if ship_geojson and 'features' in ship_geojson:
-            for feature in ship_geojson['features']:
+        # Prioritize storm data for center calculation
+        storm_coords_found = False
+        if storm_geojson and 'features' in storm_geojson:
+            for feature in storm_geojson['features']:
                 if feature['geometry']['type'] == 'Point':
                     coords = feature['geometry']['coordinates']
                     all_lons.append(coords[0])
                     all_lats.append(coords[1])
+                    storm_coords_found = True
                 elif feature['geometry']['type'] == 'LineString':
                     coords = feature['geometry']['coordinates']
                     for coord in coords:
                         all_lons.append(coord[0])
                         all_lats.append(coord[1])
+                    storm_coords_found = True
 
-        # Collect coordinates from storm data
-        if storm_geojson and 'features' in storm_geojson:
-            for feature in storm_geojson['features']:
+        # Only use ship data for center if no storm data exists
+        if not storm_coords_found and ship_geojson and 'features' in ship_geojson:
+            for feature in ship_geojson['features']:
                 if feature['geometry']['type'] == 'Point':
                     coords = feature['geometry']['coordinates']
                     all_lons.append(coords[0])

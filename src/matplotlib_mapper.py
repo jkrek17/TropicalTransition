@@ -125,6 +125,7 @@ class MatplotlibMapper:
     def calculate_bounds_from_data(self, ship_geojson=None, storm_geojson=None, padding=None):
         """
         Calculate map bounds from data with padding.
+        Prioritizes storm track for bounds calculation, then includes ship data only if no storm data exists.
         Args:
             ship_geojson (dict): Ship track GeoJSON data
             storm_geojson (dict): Storm track GeoJSON data
@@ -137,22 +138,25 @@ class MatplotlibMapper:
         all_lons = []
         all_lats = []
 
-        # Collect coordinates from ship data
-        if ship_geojson and 'features' in ship_geojson:
-            for feature in ship_geojson['features']:
+        # Prioritize storm data for bounds calculation
+        storm_coords_found = False
+        if storm_geojson and 'features' in storm_geojson:
+            for feature in storm_geojson['features']:
                 if feature['geometry']['type'] == 'Point':
                     coords = feature['geometry']['coordinates']
                     all_lons.append(coords[0])
                     all_lats.append(coords[1])
+                    storm_coords_found = True
                 elif feature['geometry']['type'] == 'LineString':
                     coords = feature['geometry']['coordinates']
                     for coord in coords:
                         all_lons.append(coord[0])
                         all_lats.append(coord[1])
+                    storm_coords_found = True
 
-        # Collect coordinates from storm data
-        if storm_geojson and 'features' in storm_geojson:
-            for feature in storm_geojson['features']:
+        # Only use ship data for bounds if no storm data exists
+        if not storm_coords_found and ship_geojson and 'features' in ship_geojson:
+            for feature in ship_geojson['features']:
                 if feature['geometry']['type'] == 'Point':
                     coords = feature['geometry']['coordinates']
                     all_lons.append(coords[0])
