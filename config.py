@@ -10,14 +10,14 @@ Modify these values to easily change map appearance and behavior.
 # =============================================================================
 
 # Storm selection options
-STORM_YEAR = 2022                    # Year to search for storms
-STORM_NAME = "Fiona"               # Name of the storm (case-insensitive)
-STORM_BASIN = "Atlantic"             # Basin: "Atlantic", "Pacific", "Indian", or "All"
+STORM_YEAR = 2020  # Year to search for storms
+STORM_NAME = "Omar"  # Name of the storm (case-insensitive)
+STORM_BASIN = "Atlantic"  # Basin: "Atlantic", "Pacific", "Indian", or "All"
 
 # Auto-download options
-AUTO_DOWNLOAD_STORM_DATA = True      # Automatically download storm data from NOAA
-FALLBACK_TO_SAMPLE_DATA = True       # Use sample data if storm not found
-SAVE_DOWNLOADED_DATA = True          # Save downloaded data to files
+AUTO_DOWNLOAD_STORM_DATA = True  # Automatically download storm data from NOAA
+FALLBACK_TO_SAMPLE_DATA = True  # Use sample data if storm not found
+SAVE_DOWNLOADED_DATA = True  # Save downloaded data to files
 
 # Storm data sources
 HURDAT2_ATLANTIC_URL = "https://www.nhc.noaa.gov/data/hurdat/hurdat2-1851-2023-051124.txt"
@@ -28,13 +28,14 @@ BASIN_SETTINGS = {
     "Atlantic": {
         "data_url": HURDAT2_ATLANTIC_URL,
         "data_file": "hurdat2_atlantic.txt",
-        "bounds": (-85.0, -20.0, 5.0, 50.0),  # (lon_min, lon_max, lat_min, lat_max)
-        "center": [30.0, -60.0],               # [lat, lon] for map center
+        "bounds":
+        (-85.0, -20.0, 5.0, 50.0),  # (lon_min, lon_max, lat_min, lat_max)
+        "center": [30.0, -60.0],  # [lat, lon] for map center
         "zoom": 4
     },
     "Pacific": {
         "data_url": HURDAT2_PACIFIC_URL,
-        "data_file": "hurdat2_pacific.txt", 
+        "data_file": "hurdat2_pacific.txt",
         "bounds": (-180.0, -80.0, 5.0, 50.0),
         "center": [25.0, -130.0],
         "zoom": 4
@@ -54,14 +55,14 @@ BASIN_SETTINGS = {
 
 # Figure settings for static maps
 FIGURE_SIZE = (12, 8)  # Width, height in inches
-FIGURE_DPI = 300       # Resolution for high-quality output
+FIGURE_DPI = 300  # Resolution for high-quality output
 
 # Default bounds (used as fallback when no data is available)
 DEFAULT_BOUNDS = (-85.0, -50.0, 15.0, 50.0)  # Western Atlantic
 AUTO_BOUNDS_PADDING = 10.0  # Degrees of padding when auto-calculating bounds from data
 
 # Grid settings
-LATITUDE_SPACING = 5   # Degrees between latitude lines
+LATITUDE_SPACING = 5  # Degrees between latitude lines
 LONGITUDE_SPACING = 5  # Degrees between longitude lines
 GRID_LINEWIDTH = 0.5
 GRID_COLOR = 'gray'
@@ -91,10 +92,42 @@ LEGEND_FRAME_ALPHA = 0.9
 
 # Legend corner positions (automatically calculated based on LEGEND_POSITION)
 LEGEND_CORNER_POSITIONS = {
-    'upper left': {'matplotlib': 'upper left', 'folium': {'bottom': 'auto', 'left': '50px', 'top': '50px', 'right': 'auto'}},
-    'upper right': {'matplotlib': 'upper right', 'folium': {'bottom': 'auto', 'left': 'auto', 'top': '50px', 'right': '50px'}},
-    'lower left': {'matplotlib': 'lower left', 'folium': {'bottom': '50px', 'left': '50px', 'top': 'auto', 'right': 'auto'}},
-    'lower right': {'matplotlib': 'lower right', 'folium': {'bottom': '50px', 'left': 'auto', 'top': 'auto', 'right': '50px'}}
+    'upper left': {
+        'matplotlib': 'upper left',
+        'folium': {
+            'bottom': 'auto',
+            'left': '50px',
+            'top': '50px',
+            'right': 'auto'
+        }
+    },
+    'upper right': {
+        'matplotlib': 'upper right',
+        'folium': {
+            'bottom': 'auto',
+            'left': 'auto',
+            'top': '50px',
+            'right': '50px'
+        }
+    },
+    'lower left': {
+        'matplotlib': 'lower left',
+        'folium': {
+            'bottom': '50px',
+            'left': '50px',
+            'top': 'auto',
+            'right': 'auto'
+        }
+    },
+    'lower right': {
+        'matplotlib': 'lower right',
+        'folium': {
+            'bottom': '50px',
+            'left': 'auto',
+            'top': 'auto',
+            'right': '50px'
+        }
+    }
 }
 
 # =============================================================================
@@ -126,4 +159,4 @@ STORM_DATA_FILE = f"data/{STORM_NAME.lower()}_{STORM_YEAR}_storm_track.geojson"
 # =============================================================================
 
 VERBOSE_OUTPUT = True
-SAVE_DEBUG_INFO = True 
+SAVE_DEBUG_INFO = True

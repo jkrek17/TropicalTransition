@@ -1,4 +1,3 @@
-sep=,
 MMSI,TimeOfFix,Latitude,Longitude,SOG,Heading,PortIndex,EEZ
 636018222, 2020 Sep 03 23:26:24 UTC, 34.722818, -71.274953, 15.2, 260, 0, 
 636018222, 2020 Sep 03 23:08:53 UTC, 34.740563, -71.188238, 15, 261, 0, 

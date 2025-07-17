@@ -1,0 +1,694 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.7,
+          30.2
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200830 1800",
+        "status": "LO",
+        "wind_speed": 25,
+        "pressure": 1011,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.4,
+          30.2
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200831 0000",
+        "status": "LO",
+        "wind_speed": 25,
+        "pressure": 1010,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.2,
+          30.6
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200831 0600",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1009,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.4,
+          31.5
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200831 1200",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1009,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.9,
+          32.2
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200831 1800",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1008,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.2,
+          32.9
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200901 0000",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1007,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.0,
+          33.8
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200901 0600",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1005,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.7,
+          34.6
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200901 1200",
+        "status": "TS",
+        "wind_speed": 35,
+        "pressure": 1003,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.2,
+          35.2
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200901 1800",
+        "status": "TS",
+        "wind_speed": 35,
+        "pressure": 1003,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.7,
+          35.8
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200902 0000",
+        "status": "TS",
+        "wind_speed": 35,
+        "pressure": 1003,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.3,
+          36.1
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200902 0600",
+        "status": "TS",
+        "wind_speed": 35,
+        "pressure": 1003,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.0,
+          36.2
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200902 1200",
+        "status": "TS",
+        "wind_speed": 35,
+        "pressure": 1003,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.4,
+          36.2
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200902 1800",
+        "status": "TS",
+        "wind_speed": 35,
+        "pressure": 1004,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.8,
+          36.2
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200903 0000",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1005,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.0,
+          36.1
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200903 0600",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1005,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.7,
+          36.1
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200903 1200",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1005,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.5,
+          35.6
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200903 1800",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1005,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.5,
+          35.3
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200904 0000",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1006,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.8,
+          35.3
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200904 0600",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1006,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.0,
+          35.3
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200904 1200",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1006,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.5,
+          35.3
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200904 1800",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1006,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.3,
+          35.5
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200905 0000",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1007,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.3,
+          36.0
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200905 0600",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1008,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.3,
+          36.8
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200905 1200",
+        "status": "TD",
+        "wind_speed": 30,
+        "pressure": 1009,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -57.1,
+          37.7
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200905 1800",
+        "status": "LO",
+        "wind_speed": 30,
+        "pressure": 1010,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.8,
+          38.8
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200906 0000",
+        "status": "LO",
+        "wind_speed": 30,
+        "pressure": 1011,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.6,
+          40.4
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "datetime": "20200906 0600",
+        "status": "LO",
+        "wind_speed": 30,
+        "pressure": 1012,
+        "intensity": "Tropical Depression",
+        "color": "#FFFF00",
+        "point_type": "storm_position"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -80.7,
+            30.2
+          ],
+          [
+            -79.4,
+            30.2
+          ],
+          [
+            -78.2,
+            30.6
+          ],
+          [
+            -77.4,
+            31.5
+          ],
+          [
+            -76.9,
+            32.2
+          ],
+          [
+            -76.2,
+            32.9
+          ],
+          [
+            -75.0,
+            33.8
+          ],
+          [
+            -73.7,
+            34.6
+          ],
+          [
+            -72.2,
+            35.2
+          ],
+          [
+            -70.7,
+            35.8
+          ],
+          [
+            -69.3,
+            36.1
+          ],
+          [
+            -68.0,
+            36.2
+          ],
+          [
+            -66.4,
+            36.2
+          ],
+          [
+            -64.8,
+            36.2
+          ],
+          [
+            -63.0,
+            36.1
+          ],
+          [
+            -61.7,
+            36.1
+          ],
+          [
+            -60.5,
+            35.6
+          ],
+          [
+            -59.5,
+            35.3
+          ],
+          [
+            -58.8,
+            35.3
+          ],
+          [
+            -58.0,
+            35.3
+          ],
+          [
+            -57.5,
+            35.3
+          ],
+          [
+            -57.3,
+            35.5
+          ],
+          [
+            -57.3,
+            36.0
+          ],
+          [
+            -57.3,
+            36.8
+          ],
+          [
+            -57.1,
+            37.7
+          ],
+          [
+            -56.8,
+            38.8
+          ],
+          [
+            -55.6,
+            40.4
+          ]
+        ]
+      },
+      "properties": {
+        "storm_name": "OMAR",
+        "storm_id": "AL152020",
+        "year": 2020,
+        "track_type": "storm_track"
+      }
+    }
+  ]
+}
