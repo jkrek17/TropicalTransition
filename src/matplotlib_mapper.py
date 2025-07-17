@@ -263,28 +263,6 @@ class MatplotlibMapper:
         
         print(f"   Total ship tracks plotted: {track_count}")
 
-            elif feature['geometry']['type'] == 'Point':
-                coords = feature['geometry']['coordinates']
-                props = feature['properties']
-                vessel_name = props['vessel_name']
-                vessel_type = props['vessel_type']
-                track_color = props.get('track_color', vessel_colors.get(vessel_type, 'blue'))
-                lon = coords[0]
-                lat = coords[1]
-
-                # Transform to 0-360 if using central_longitude=180
-                if use_360:
-                    lon = lon + 360 if lon < 0 else lon
-
-                print(f"   Debug: Plotting ship point {vessel_name}: lon={lon}, lat={lat} (use_360={use_360})")
-
-                # Add point marker
-                ax.scatter(lon, lat, 
-                          c=track_color,
-                          s=20, alpha=0.7, 
-                          transform=ccrs.Geodetic(),
-                          zorder=5)
-
     def add_storm_track(self, storm_geojson, ax=None):
         """
         Add tropical cyclone track to the map.
