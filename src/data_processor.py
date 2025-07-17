@@ -287,6 +287,9 @@ class DataProcessor:
                 # Add file source
                 gdf['source_file'] = os.path.basename(csv_file)
                 
+                # Add unique file index to help with grouping
+                gdf['file_index'] = i
+                
                 all_ship_data.append(gdf)
                 print(f"    Loaded {len(gdf)} points from {csv_file}")
                 
@@ -359,8 +362,16 @@ class DataProcessor:
         
         features = []
         
-        # Group by vessel to create track lines
-        if 'vessel_name' in ship_data.columns:
+        # Group by vessel to create track lines - use source_file + vessel identifier for unique tracks
+        if 'vessel_name' in ship_data.columns and 'source_file' in ship_data.columns:
+            # Create unique vessel identifier combining source file and vessel name
+            ship_data['unique_vessel_id'] = ship_data['source_file'] + '_' + ship_data['vessel_name'].astype(str)
+            vessel_groups = ship_data.groupby('unique_vessel_id')
+        elif 'MMSI' in ship_data.columns and 'source_file' in ship_data.columns:
+            # For real data, group by source file + MMSI
+            ship_data['unique_vessel_id'] = ship_data['source_file'] + '_' + ship_data['MMSI'].astype(str)
+            vessel_groups = ship_data.groupby('unique_vessel_id')
+        elif 'vessel_name' in ship_data.columns:
             vessel_groups = ship_data.groupby('vessel_name')
         else:
             # For real data, group by MMSI
@@ -379,6 +390,10 @@ class DataProcessor:
             # Get vessel name for display
             if 'vessel_name' in vessel_data.columns:
                 vessel_name = vessel_data['vessel_name'].iloc[0]
+                # If we have source file info, include it for clarity
+                if 'source_file' in vessel_data.columns:
+                    source_file = vessel_data['source_file'].iloc[0]
+                    vessel_name = f"{vessel_name} ({source_file})"
             else:
                 vessel_name = f"Vessel {vessel_id}"
             

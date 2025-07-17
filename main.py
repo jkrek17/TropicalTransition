@@ -114,9 +114,32 @@ def main():
     # Print summary
     print("\n📋 Project Summary:")
     if ship_data is not None:
-        num_vessels = len(ship_data.groupby(['vessel_name', 'MMSI']).groups) if 'vessel_name' in ship_data.columns or 'MMSI' in ship_data.columns else 0
+        # Count unique vessels/tracks
+        if 'unique_vessel_id' in ship_data.columns:
+            num_vessels = len(ship_data['unique_vessel_id'].unique())
+        elif 'vessel_name' in ship_data.columns:
+            num_vessels = len(ship_data['vessel_name'].unique())
+        elif 'MMSI' in ship_data.columns:
+            num_vessels = len(ship_data['MMSI'].unique())
+        else:
+            num_vessels = 0
+            
         num_files = len(ship_data['source_file'].unique()) if 'source_file' in ship_data.columns else 1
-        print(f"   - Ship tracks: {num_vessels} vessels from {num_files} data files")
+        total_points = len(ship_data)
+        print(f"   - Ship tracks: {num_vessels} unique tracks from {num_files} data files ({total_points} total points)")
+        
+        # Show breakdown by file
+        if 'source_file' in ship_data.columns:
+            print("   - File breakdown:")
+            for file in ship_data['source_file'].unique():
+                file_data = ship_data[ship_data['source_file'] == file]
+                file_points = len(file_data)
+                if 'MMSI' in file_data.columns:
+                    vessel_id = file_data['MMSI'].iloc[0]
+                    print(f"     • {file}: MMSI {vessel_id} ({file_points} points)")
+                else:
+                    vessel_name = file_data['vessel_name'].iloc[0] if 'vessel_name' in file_data.columns else 'Unknown'
+                    print(f"     • {file}: {vessel_name} ({file_points} points)")
     else:
         print("   - Ship tracks: No ship data loaded")
     print(f"   - Storm track: {config.STORM_NAME} ({config.STORM_YEAR}) from {config.STORM_BASIN} basin")

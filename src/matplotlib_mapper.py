@@ -234,8 +234,10 @@ class MatplotlibMapper:
             'Fishing': 'green',
             'Passenger': 'purple'
         }
+        track_count = 0
         for feature in ship_geojson['features']:
             if feature['geometry']['type'] == 'LineString':
+                track_count += 1
                 coords = feature['geometry']['coordinates']
                 vessel_name = feature['properties']['vessel_name']
                 vessel_type = feature['properties']['vessel_type']
@@ -246,7 +248,7 @@ class MatplotlibMapper:
                 if use_360:
                     lons = [lon + 360 if lon < 0 else lon for lon in lons]
 
-                print(f"   Debug: Plotting ship track {vessel_name}: lons={lons[:3]}...{lons[-3:]}, lats={lats[:3]}...{lats[-3:]} (use_360={use_360})")
+                print(f"   Debug: Plotting ship track #{track_count} {vessel_name}: {len(coords)} points, lons={lons[:3]}...{lons[-3:]}, lats={lats[:3]}...{lats[-3:]} (use_360={use_360})")
 
                 track_color = feature['properties'].get('track_color', vessel_colors.get(vessel_type, 'blue'))
 
@@ -255,9 +257,11 @@ class MatplotlibMapper:
                        color=track_color,
                        linewidth=2, alpha=0.8, 
                        transform=ccrs.Geodetic(),
-                       label=f'{vessel_name} ({vessel_type})')
+                       label=f'{vessel_name}')
 
-                print(f"   Added ship track: {vessel_name} in {track_color}")
+                print(f"   Added ship track #{track_count}: {vessel_name} in {track_color}")
+        
+        print(f"   Total ship tracks plotted: {track_count}")
 
             elif feature['geometry']['type'] == 'Point':
                 coords = feature['geometry']['coordinates']
