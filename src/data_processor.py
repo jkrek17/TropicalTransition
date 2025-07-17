@@ -269,6 +269,39 @@ class DataProcessor:
                     df['vessel_type'] = 'Cargo'
                     geometry = [Point(lon, lat) for lon, lat in zip(df['Longitude'], df['Latitude'])]
                     
+                elif 'MMSI' in df.columns and any(col in df.columns for col in ['Longitude', 'Latitude', 'longitude', 'latitude']):
+                    # Alternative real ship data format
+                    if 'BaseDateTime' in df.columns:
+                        df['timestamp'] = pd.to_datetime(df['BaseDateTime'])
+                    elif 'DateTime' in df.columns:
+                        df['timestamp'] = pd.to_datetime(df['DateTime'])
+                    else:
+                        # Create a default timestamp if none exists
+                        df['timestamp'] = pd.to_datetime('2022-01-01 00:00:00')
+                    
+                    # Handle different longitude/latitude column names
+                    if 'Longitude' in df.columns and 'Latitude' in df.columns:
+                        lon_col, lat_col = 'Longitude', 'Latitude'
+                    elif 'longitude' in df.columns and 'latitude' in df.columns:
+                        lon_col, lat_col = 'longitude', 'latitude'
+                    elif 'LON' in df.columns and 'LAT' in df.columns:
+                        lon_col, lat_col = 'LON', 'LAT'
+                    else:
+                        print(f"    Skipping {csv_file}: Could not find longitude/latitude columns")
+                        continue
+                    
+                    # Rename columns to match our expected format
+                    if 'SOG' in df.columns:
+                        df = df.rename(columns={'SOG': 'speed_knots'})
+                    if 'Heading' in df.columns:
+                        df = df.rename(columns={'Heading': 'heading_degrees'})
+                    if 'COG' in df.columns:
+                        df = df.rename(columns={'COG': 'heading_degrees'})
+                    
+                    df['vessel_name'] = f"Vessel {df['MMSI'].iloc[0]}"
+                    df['vessel_type'] = 'Cargo'
+                    geometry = [Point(lon, lat) for lon, lat in zip(df[lon_col], df[lat_col])]
+                    
                 elif 'vessel_name' in df.columns and 'timestamp' in df.columns:
                     # Sample ship data format
                     df['timestamp'] = pd.to_datetime(df['timestamp'])
