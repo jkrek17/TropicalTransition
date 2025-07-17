@@ -627,12 +627,13 @@ class MapCreator:
                         all_coords.append(geom['coordinates'])
         if detect_dateline_crossing(all_coords):
             use_360 = True
+            print("DEBUG: Dateline crossing detected - transforming all data to 0-360 system")
             if ship_geojson:
                 ship_geojson = transform_geojson_to_360(ship_geojson)
-                print(f'DEBUG: Transformed ship_geojson to 0-360: {ship_geojson}')
+                print(f'DEBUG: Transformed ship_geojson to 0-360')
             if storm_geojson:
                 storm_geojson = transform_geojson_to_360(storm_geojson)
-                print(f'DEBUG: Transformed storm_geojson to 0-360: {storm_geojson}')
+                print(f'DEBUG: Transformed storm_geojson to 0-360')
         # Calculate map center and zoom
         center_lat, center_lon, zoom_start = self.calculate_map_center_and_zoom(ship_geojson, storm_geojson)
         self.create_base_map(center_lat=center_lat, center_lon=center_lon, zoom_start=zoom_start)

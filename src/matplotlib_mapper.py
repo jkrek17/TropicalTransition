@@ -262,7 +262,7 @@ class MatplotlibMapper:
                        label=f'{vessel_name}')
 
                 print(f"   Added ship track #{track_count}: {vessel_name} in {track_color}")
-        
+
         print(f"   Total ship tracks plotted: {track_count}")
 
     def add_storm_track(self, storm_geojson, ax=None):
@@ -422,5 +422,60 @@ class MatplotlibMapper:
         # Add legend and title
         self.add_legend()
         self.add_title_and_info()
+        # Save the map
+        return self.save_map(output_file)
+
+    def create_complete_map(self, ship_geojson=None, storm_geojson=None, output_file="output/tropical_cyclone_map_static.png"):
+        """
+        Create a complete static map with all features.
+
+        Longitude System Logic:
+        - If dateline crossing is detected, all data is transformed to 0–360 longitude.
+        - The map projection is set to PlateCarree(central_longitude=180).
+        - All plotting uses 0–360 coordinates.
+        - If no dateline crossing, all data uses -180–180 longitude.
+        The transformation is applied ONCE here, and all plotting uses the same system.
+        """
+        # Collect all coordinates to check for dateline crossing
+        all_coords = []
+        for geo in [ship_geojson, storm_geojson]:
+            if geo and 'features' in geo:
+                for feature in geo['features']:
+                    geom = feature['geometry']
+                    if geom['type'] == 'LineString':
+                        all_coords.extend(geom['coordinates'])
+                    elif geom['type'] == 'Point':
+                        all_coords.append(geom['coordinates'])
+
+        # Transform data if dateline crossing detected
+        use_360 = False
+        if detect_dateline_crossing(all_coords):
+            use_360 = True
+            print("DEBUG: Dateline crossing detected - transforming all data to 0-360 system")
+            if ship_geojson:
+                ship_geojson = transform_geojson_to_360(ship_geojson)
+                print(f'DEBUG: Transformed ship_geojson to 0-360')
+            if storm_geojson:
+                storm_geojson = transform_geojson_to_360(storm_geojson)
+                print(f'DEBUG: Transformed storm_geojson to 0-360')
+
+        # Calculate bounds from data
+        bounds = self.calculate_bounds_from_data(ship_geojson, storm_geojson)
+
+        # Create base map
+        self.create_base_map(bounds=bounds)
+
+        # Add ship tracks if available
+        if ship_geojson:
+            self.add_ship_tracks(ship_geojson, use_360=use_360)
+
+        # Add storm track if available
+        if storm_geojson:
+            self.add_storm_track(storm_geojson, use_360=use_360)
+
+        # Add legend and other features
+        self.add_legend()
+        #self.add_gridlines() # This function was removed from original code so also removing here
+
         # Save the map
         return self.save_map(output_file)
